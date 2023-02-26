@@ -1,0 +1,264 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm, amsmath, mathtools, amssymb}
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[catalan]{babel}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{lmodern}
+
+\titleformat{\section}
+  {\normalfont\fontsize{11}{15}\bfseries}{\thesection}{1em}{}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{definition}[theorem]{Definició}
+\newtheorem{prop}[theorem]{Proposició}
+
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\RR}{\ensuremath{\mathbb{R}}}
+\DeclareMathOperator{\Cl}{Cl} % closure set
+\DeclareMathOperator{\Int}{Int} % interior set
+
+% \renewcommand{\theenumi}{\textbf{\thesection.\arabic{enumi}}}
+% \renewcommand{\labelenumi}{\textbf{\thesection.\arabic{enumi}.}}
+
+\title{\bfseries\Large SEMINARI 2. Axiomes de separació}
+
+\author{}
+\date{\parbox{\linewidth}{\centering
+  Topologia\endgraf
+  Grau en Matemàtiques\endgraf
+  Universitat Autònoma de Barcelona\endgraf
+  Octubre de 2021}}
+
+\setlength{\parindent}{0pt}
+\begin{document}
+\selectlanguage{catalan}
+\maketitle
+En aquest seminari discutirem els axiomes de separació, que són diferents tipus de restriccions extres que imposem que compleixin certs espais topològics. Així doncs farem un estudi de 5 d'aquests axiomes, que classificarem en dos blocs segons intervinguin únicament punts o punts i tancats en la restricció.
+
+Durant tot el document suposarem que el conjunt $X$ amb el que treballem té més d'un punt, és a dir, $|X|\geq 2$.
+\section{De \texorpdfstring{$T_0$}{T0} a \texorpdfstring{$T_2$}{T2}}
+\subsubsection*{Espais $T_0$ o Kolmogorov}
+Comencem donant la definició de què és un espai $T_0$.
+\begin{definition}
+      Sigui $(X,\tau)$ un espai topològic. Diem que $(X,\tau)$ és $T_0$ (o Kolmogorov) si per tot parell de punts diferents $x,y\in X$, existeix un obert que conté un dels punts i no l'altre.
+\end{definition}
+D'entrada observem que la topologia grollera no és $T_0$ ja que l'únic obert (diferent del buit) és el total, que contindrà els dos components de qualsevol parella de punts. D'altra banda, la topologia discreta és $T_0$ ja que si $x\ne y\in X$ són dos punts diferents, aleshores $\{x\}\in\tau$ és un obert que compleix $x\in\{x\}$ i $y\notin\{x\}$.
+\begin{prop}
+      Sigui $X$ un conjunt tal que $|X|\geq 2$ i $A\subset X$ un subconjunt tal que $|X\setminus A|>1$. Definim els següent conjunt: $$\tau:=\{X\}\cup\{B\subset X:B\subset A\}$$
+      Aleshores, $(X,\tau)$ és un espai topològic que no és $T_0$.
+\end{prop}
+\begin{proof}
+      Comprovem primer que $\tau$ és una topologia. Per això hem de veure que se satisfan els tres axiomes de topologia.
+      \begin{itemize}
+            \item Per definició $X\in\tau$ i, com que $\varnothing\subset A$, tenim també que $\varnothing\in\tau$.
+            \item Sigui $n\in\NN$ i $\{B_i:B_i\in\tau, i=1,\ldots,n\}$ una família finita d'elements de $\tau$. Aleshores, tenim dues possibilitats:
+                  \begin{itemize}
+                        \item Si $\exists j\in\{1,\ldots,n\}$ tal que $B_j\ne X$, aleshores tenim que $B_j\subset A$ i llavors $\bigcap_{i=1}^nB_i\subset B_j\subset A$. Per tant, $\bigcap_{i=1}^nB_i\in\tau$.
+                        \item Si $\forall i\in\{1,\ldots,n\}$ tenim que $B_i= X$, aleshores $\bigcap_{i=1}^nB_i=X\in\tau$.
+                  \end{itemize}
+            \item Sigui $I$ un conjunt arbitrari i $\{B_i:B_i\in\tau, i\in I\}$ una família arbitrària d'elements de $\tau$. Aleshores, tenim dues possibilitats:
+                  \begin{itemize}
+                        \item Si $\exists j\in I$ tal que $B_j=X$, aleshores $\bigcup_{i\in I}B_i=X\in\tau$.
+                        \item Si $\forall i\in I$ tenim que $B_i\ne X$, aleshores $B_i\subset A$ $\forall i\in I$. Per tant, $\bigcup_{i\in I}B_i\subset A$.
+                  \end{itemize}
+      \end{itemize}
+      Per tant, $\tau$ és una topologia. Però $(X,\tau)$ no és $T_0$ ja que si prenem dos punts $x,y\in X\setminus A$ (que podem fer-ho perquè per hipòtesi $|X\setminus A|>1$), aleshores només hi ha un únic obert que conté $x$ i només hi ha un únic obert que conté $y$. Però aquest obert és el mateix perquè és el total. Per tant, no existeix un obert que contingui un dels punts i no l'altre.
+\end{proof}
+\subsubsection*{Espais $T_1$ o Fréchet}
+Comencem donant la definició de què és un espai $T_1$.
+\begin{definition}
+      Sigui $(X,\tau)$ un espai topològic. Diem que $(X,\tau)$ és $T_1$ (o Fréchet) si per tot parell de punts diferents $x,y\in X$, existeix un obert $U\in\tau$ tal que $x\in U$ i $y\notin U$.
+\end{definition}
+\begin{prop}
+      Tot espai topològic $T_1$ és $T_0$.
+\end{prop}
+\begin{proof}
+      Sigui $(X,\tau)$ un espai topològic $T_1$. Aleshores, sabem que per tot parell de punts diferents $x,y\in X$, existeix un obert $U\in\tau$ tal que $x\in U$ i $y\notin U$, que implica que existeix un obert que conté un dels punts i no l'altre. Per tant, $(X,\tau)$ és $T_0$.
+\end{proof}
+El recíproc d'aquesta proposició és fals. És a dir, no tot espai topològic $T_0$ és $T_1$. Per exemple, si prenem $X=\{0,1\}$ i $\tau=\{\varnothing,\{1\},\{0,1\}\}$ la topologia de Sierpiński, aleshores prenent els dos únics punts que hi ha a $X$, tenim que existeix un obert ($\{1\}$) que conté un dels punts i però no l'altre, per tant, és $T_0$. Però no hi ha un obert en $\tau$ que contingui 0 i no contingui 1, per tant, no és $T_1$.
+
+Un altre exemple per veure que el recíproc de la proposició és fals el trobem prenent la topologia del punt exclòs sobre un conjunt $X$: prenem $x_0\in X$ i definim $\tau$ de la següent manera: $$\tau:=\{X\}\cup\{A\subset X:x_0\notin A\}$$ Ja sabem que $\tau$ defineix una topologia sobre $X$. A més, si prenem $x\ne y\in X$, aleshores com a mínim un d'ells serà diferent de $x_0$ (suposem sense pèrdua de generalitat que és $x$) i, per tant, $\{x\}\in\tau$ és un obert que conté un dels punts però no l'altre. Per tant, $(X,\tau)$ és $T_0$. En canvi no és $T_1$, perquè si prenem $x\in X\setminus\{x_0\}$ no hi ha cap obert que contingui $x_0$ i no contingui $x$ (l'únic obert que conté $x_0$ és $X$, però $x\in X$). Per tant, $(X,\tau)$ no és $T_1$.
+
+A continuació enunciarem dues caracteritzacions dels espais $T_1$.
+\begin{theorem}\label{theorem2}
+      Sigui $(X,\tau)$ un espai topològic. Són equivalents:
+      \begin{enumerate}
+            \item\label{t1_1} $(X,\tau)$ és $T_1$.
+            \item\label{t1_2} Per a tot $x\in X$, $\{x\}=\bigcap_{N\in \mathcal{N}_x}N$.
+            \item\label{t1_3} Per a tot $x\in X$, $\{x\}$ és tancat.
+      \end{enumerate}
+\end{theorem}
+\begin{proof}
+      Demostrarem $\ref{t1_1}\iff\ref{t1_2}$ i $\ref{t1_1}\iff\ref{t1_3}$.
+      \begin{itemize}[leftmargin=2cm]
+            \item [$\ref{t1_1}\implies\ref{t1_2}:$] Sabem que $(X,\tau)$ és $T_1$ i volem demostrar que per a tot $x\in X$, $\{x\}=\bigcap_{N\in \mathcal{N}_x}N$. Primer de tot, observem que $\bigcap_{N\in \mathcal{N}_x}N=\bigcap_{\substack{U\in \tau\\x\in U}}U$. En efecte, com que tot obert contenint $x$ és un entorn de $x$, tenim la inclusió $\bigcap_{N\in \mathcal{N}_x}N\subset\bigcap_{\substack{U\in \tau\\x\in U}}U$. L'altre inclusió es deu a la definició d'entorn: $N\in\mathcal{N}_x$ si i només si $\exists U\in\tau$ tal que $x\in U\subset N$. Per tant, un punt en $\bigcap_{\substack{U\in \tau\\x\in U}}U$ ha d'estar necessàriament a $\bigcap_{N\in \mathcal{N}_x}N$.
+
+                  Així doncs, provarem que per a tot $x\in X$, $\{x\}=\bigcap_{\substack{U\in \tau\\x\in U}}U$. Suposem que $y\in X$ és tal que $y\ne x$ i $y\in\bigcap_{\substack{U\in \tau\\x\in U}}U$. És a dir $y$ està contingut en tot obert que conté $x$. Per tant, no existeix cap obert que conté $x$ i no conté $y$. Però això contradiu al fet que $(X,\tau)$ sigui $T_1$. Per tant, $\{x\}=\bigcap_{\substack{U\in \tau\\x\in U}}U$.
+            \item [$\ref{t1_1}\impliedby\ref{t1_2}:$] Vegem ara que $(X,\tau)$ és $T_1$, sabent que per a tot $x\in X$, $\{x\}=\bigcap_{N\in \mathcal{N}_x}N=\bigcap_{\substack{U\in \tau\\x\in U}}U$.
+
+                  Suposem que $(X,\tau)$ no és $T_1$, és a dir, existeixen $x\ne y\in X$ tals que per a tot $U\in\tau$ tal que $x\in U$, tenim $y\in U$. Però llavors, $y\in\bigcap_{\substack{U\in \tau\\x\in U}}U=\{x\}$, que és una contradicció amb la hipòtesi inicial. Per tant, $(X,\tau)$ és $T_1$.
+            \item [$\ref{t1_1}\implies\ref{t1_3}:$] Sabem que $(X,\tau)$ és $T_1$ i volem demostrar que per a tot $x\in X$, $\{x\}$ és tancat. Observem que $\{x\}$ és tancat si i només si $X\setminus\{x\}$ és obert. Així doncs, demostrarem que $X\setminus\{x\}$ és obert.
+
+                  Suposem que $X\setminus\{x\}$ no és obert. Aleshores, podem prendre $y\in (X\setminus\{x\})\setminus\Int(X\setminus\{x\})\ne\varnothing$. Però com que $(X,\tau)$ és $T_1$, $\exists U\in\tau$ tal que $y\in U$ i $x\notin U$. Llavors, tenim que $U\subset X\setminus\{x\}$. D'altra banda, com que $\Int(X\setminus\{x\})$ és l'obert més gran contingut en $X\setminus\{x\}$, tenim que $U\subset\Int(X\setminus\{x\})$. Però llavors, $y\in U\subset\Int(X\setminus\{x\})\not\ni y$ per definició de $y$, que és una contradicció. Per tant, $X\setminus\{x\}$ és obert i, en conseqüència, $\{x\}$ és tancat.
+            \item [$\ref{t1_1}\impliedby\ref{t1_3}:$] Vegem ara que $(X,\tau)$ és $T_1$, sabent que per a tot $x\in X$, $\{x\}$ és tancat.
+
+                  Siguin $x\ne y\in X$ dos punts diferents. Aleshores, com que $\{x\}$ és tancat, tenim que $X\setminus\{x\}$ és obert i es compleix que $y\in X\setminus\{x\}$ i $x\notin X\setminus\{x\}$. Per tant, $(X,\tau)$ és $T_1$.
+      \end{itemize}
+\end{proof}
+\subsubsection*{Espais $T_2$ o Hausdorff}
+Comencem donant la definició de què és un espai $T_2$.
+\begin{definition}
+      Sigui $(X,\tau)$ un espai topològic. Diem que $(X,\tau)$ és $T_2$ (o Hausdorff) si per tot parell de punts diferents $x,y\in X$, existeixen $U,V\in\tau$ tals que $x\in U$, $y\in V$ i $U\cap V=\varnothing$.
+\end{definition}
+\begin{prop}
+      Tot espai topològic $T_2$ és $T_1$.
+\end{prop}
+\begin{proof}
+      Sigui $(X,\tau)$ un espai topològic $T_2$ i $x\ne y\in X$. Aleshores, existeixen oberts $U,V\in\tau$ tals que $x\in U$, $y\in V$ i $U\cap V=\varnothing$. En particular, aquest $U$ compleix que $x\in U$ i $y\notin U$ perquè $V\subset X\setminus U$ (ja que $U\cap V=\varnothing$). Per tant, $(X,\tau)$ és $T_1$.
+\end{proof}
+El recíproc d'aquesta proposició és fals. És a dir, no tot espai topològic $T_1$ és $T_2$. Per exemple, si prenem $X$ que sigui un conjunt infinit i li posem la topologia cofinita $\tau=\{\varnothing\}\cup\{U\subset X:X\setminus U\text{ és finit}\}$, aleshores tenim que $(X,\tau)$ és $T_1$ però no $T_2$. En efecte, $(X,\tau)$ és $T_1$ perquè els tancats a $(X,\tau)$ són els conjunts finits (i el total) i com que els punts són finits, seran tancats. Llavors pel teorema \ref{theorem2}, tenim que $(X,\tau)$ és $T_1$. Però $(X,\tau)$ no és $T_2$, perquè si ho fos, podríem trobar dos oberts $U,V\in\tau$ no buits tals que $U\cap V=\varnothing\implies U\subset X\setminus V$. Ara bé, la part de dreta d'aquesta última inclusió és finita mentre que la de l'esquerra és infinita (perquè $U\ne\varnothing$), que no pot ser.
+
+A continuació enunciarem dues caracteritzacions dels espais $T_2$.
+\begin{theorem}
+      Sigui $(X,\tau)$ un espai topològic. Són equivalents:
+      \begin{enumerate}
+            \item\label{t2_1} $(X,\tau)$ és $T_2$.
+            \item\label{t2_2} Per a tot $x\in X$, $\{x\}=\bigcap_{N\in \mathcal{N}_x}\Cl(N)$.
+            \item\label{t2_3} La diagonal $\Delta(X):=\{(x,x)\in X\times X\}\subset X\times X$ és tancada.
+      \end{enumerate}
+\end{theorem}
+\begin{proof}
+      Demostrarem $\ref{t2_1}\iff\ref{t2_2}$ i $\ref{t2_1}\iff\ref{t2_3}$.
+      \begin{itemize}[leftmargin=2cm]
+            \item [$\ref{t2_1}\implies\ref{t2_2}:$] Sabem que $(X,\tau)$ és $T_2$ i volem demostrar que per a tot $x\in X$, $\{x\}=\bigcap_{N\in \mathcal{N}_x}\Cl(N)$. Primer de tot, observem que $\bigcap_{N\in \mathcal{N}_x}\Cl(N)=\bigcap_{\substack{U\in \tau\\x\in U}}\Cl(U)$ pel que hem comentat en la demostració del teorema \ref{theorem2}.
+
+                  Així doncs, provarem que per a tot $x\in X$, $\{x\}=\bigcap_{\substack{U\in \tau\\x\in U}}\Cl(U)$. Suposem que $y\in X$ és tal que $y\ne x$ i $y\in\bigcap_{\substack{U\in \tau\\x\in U}}\Cl(U)$. És a dir, $y$ està contingut en la clausura de tot obert que conté $x$. Per tant, $y$ és adherent a $U$ $\forall U\in\tau$ tal que $x\in U$. Per la definició de punt adherent, això implica que $\forall V\in\tau$ tal que $y\in V$, $V\cap U\ne\varnothing$ i això $\forall U\in\tau$ tal que $x\in U$. És a dir, no existeixen oberts $U,V$ tals que $x\in U$, $y\in V$ i $U\cap V=\varnothing$, que és una contradicció amb la hipòtesi que $(X,\tau)$ és $T_2$. Per tant, $\{x\}=\bigcap_{\substack{U\in \tau\\x\in U}}\Cl(U)$.
+            \item [$\ref{t2_1}\impliedby\ref{t2_2}:$] Vegem ara que $(X,\tau)$ és $T_2$, sabent que per a tot $x\in X$, $\{x\}=\bigcap_{N\in \mathcal{N}_x}\Cl(N)=\bigcap_{\substack{U\in \tau\\x\in U}}\Cl(U)$.
+
+                  Suposem que $(X,\tau)$ no és $T_2$, és a dir, existeixen $x\ne y\in X$ tals que per a tot $U,V\in\tau$ tals que $x\in U$ i $y\in V$, tenim $U\cap V\ne\varnothing$. Però llavors $y$ és adherent a $U$ $\forall U\in\tau$ tal que $x\in U$, és a dir, $y\in\Cl(U)$ $\forall U\in\tau$ tal que $x\in U$. Però llavors $y\in\bigcap_{\substack{U\in \tau\\x\in U}}\Cl(U)=\{x\}$, que és una contradicció amb la hipòtesi inicial. Per tant, $(X,\tau)$ és $T_2$.
+            \item [$\ref{t2_1}\implies\ref{t2_3}:$] Sabem que $(X,\tau)$ és $T_2$ i volem demostrar que per a tot $x\in X$, $\Delta (X)$ és un conjunt tancat, que és equivalent a veure que $X\times X\setminus\Delta (X)$ és un conjunt obert.
+
+                  Suposem que $X\times X\setminus\Delta (X)$ no és obert. Aleshores, podem prendre $(x,y)\in (X\times X\setminus\Delta (X))\setminus\Int(X\times X\setminus\Delta (X))\ne\varnothing$. Però com que $(X,\tau)$ és $T_2$, $\exists U,V\in\tau$ tals que $x\in U$, $y\in V$ i $U\cap V=\varnothing$. Llavors, com que $U\cap V=\varnothing$, tenim que $U\times V\subset X\times X\setminus\Delta (X)$. D'altra banda, com que $\Int(X\times X\setminus\Delta (X))$ és l'obert més gran contingut en $X\times X\setminus\Delta (X)$, tenim que $U\times V\subset\Int(X\times X\setminus\Delta (X))$. Però llavors, $(x,y)\in U\times V\subset\Int(X\times X\setminus\Delta (X))\not\ni (x,y)$ per la definició de $(x,y)$, que és una contradicció. Per tant, $X\times X\setminus\Delta (X)$ és obert i, en conseqüència, $\Delta (X)$ és tancat.
+            \item [$\ref{t2_1}\impliedby\ref{t2_3}:$] Vegem ara que $(X,\tau)$ és $T_2$, sabent que per a tot $x\in X$, $\Delta (X)$ és un conjunt tancat.
+
+                  Siguin $x\ne y\in X$ dos punts diferents. Aleshores, com que $\Delta (X)$ és tancat, tenim que $X\times X\setminus\Delta (X)$ és obert i per tant $\exists U,V\in\tau$ tals que $(x,y)\in U\times V\subset X\times X\setminus\Delta (X)$. A més, $U\cap V=\varnothing$, ja que si no fos així, existiria $z\in X$ tal que $z\in U$ i $z\in V$ i llavors tindríem $(z,z)\in U\times V\subset X\times X\setminus\Delta (X)\not\ni (z,z)$ ja que $(z,z)\in \Delta (X)$. Però això últim no pot passar, per tant $U\cap V=\varnothing$ i, en conseqüència, $(X,\tau)$ és $T_2$.
+      \end{itemize}
+\end{proof}
+
+\section{De \texorpdfstring{$T_3$}{T3} a \texorpdfstring{$T_4$}{T4}}
+\subsubsection*{Espais $T_3$ o regulars}
+Comencem donant la definició de què és un espai $T_3$.
+\begin{definition}
+      Diem que un espai topològic $(X,\tau)$ és $T_3$ si és $T_1$ i donat $x\in X$ i $F\subset X$ tancat amb $x\notin F$, existeixen oberts $U,V\subset X$ tals que $x\in U$, $F\subset V$ i $U\cap V=\varnothing$.
+\end{definition}
+\begin{prop}
+      Tot espai topològic $T_3$ és $T_2$.
+\end{prop}
+\begin{proof}
+      Sigui $(X,\tau)$ un espai topològic $T_3$ i $x, y\in X$. Com que, per definició, $(X,\tau)$ també és $T_1$, sabem que existeix un obert $U_0$ tal que $x\in U_0$ i $y\notin U_0$. Per tant $F=X\setminus U_0$ és un tancat que no conté l'element $x$ però sí que conté $y$. Per la propietat de regularitat, es té que existeixen oberts $U$, $V$ tals que $x\in U$, $y\in F\subset V$ i que $U\cap V=\varnothing$. Per tant es compleix la propietat $T_2$\footnote{Notem que de la manera que està feta aquesta demostració, realment no cal considerar la propietat $T_1$ per poder assegurar que $T_3$ és una propietat més restrictiva que $T_2$. Amb la propietat $T_0$ ja ens és suficient, ja que únicament hem necessitat un obert per a la parella $x$, $y$.}.
+\end{proof}
+
+El recíproc de la proposició és fals, és a dir, no tot espai $T_2$ és $T_3$. Vegem un exemple d'això:
+
+Sigui $X=\mathbb R$ i definim el conjunt $Z:=\{\frac{1}{n} : 0\neq n \in \mathbb Z\}\subset \mathbb R$. Llavors, considerem els subconjunts
+$$U_n(x)=
+      \left\{
+      \begin{array}{ccc}
+            (x-\frac{1}{n}, x+\frac{1}{n})        & \text{si} & x\ne 0 \\
+            (-\frac{1}{n},\frac{1}{n})\setminus Z & \text{si} & x=0    \\
+      \end{array}
+      \right.$$
+Prenem $\mathcal B=\{U_n(x):n\in \mathbb N, x\in X\}$. Vegem que la co\lgem ecció $\mathcal B$ compleix les propietats per generar una topologia a la recta real, és a dir que és una base d'una topologia:
+\begin{itemize}
+      \item Vegem que $X=\bigcup_{B\in \mathcal B}B$:
+            \begin{itemize}
+                  \item[$\subset:$] Sigui $x\in X \implies x\in U_1(x) \implies x\in \bigcup_{B\in \mathcal B}B$ ja que $U_1(x) \in \mathcal B$.
+                  \item[$\supset:$] És clar que $\bigcup_{B\in \mathcal B}B \subset X$ perquè $B\subset X, \ \forall B\in \mathcal B$.
+            \end{itemize}
+      \item Vegem que $\forall U, V\in \mathcal B$ i $\forall x\in U\cap V,\ \exists B\in\mathcal B$ tal que $x\in B\subset U\cap V$:
+
+            Siguin $U_n(x)$ i $U_m(y)$ dos elements de $\mathcal B$. Si $U_n(x)\cap U_m(y) =\varnothing$, llavors la condició es compleix automàticament. Si $U_n(x)\cap U_m(y) \neq \varnothing$, llavors tenim diversos casos a considerar:
+            \begin{itemize}
+                  \item Si $x=y=0$, aleshores $U_n(0)\cap U_m(0)=U_{\max\{m,n\}}(0)\in\mathcal{B}$.
+                  \item Si, sense pèrdua de generalitat, $x=0$ i $y\ne 0$, prenem $z\in U_n(0)\cap U_m(y)$. Aleshores, sabem que existeix $k\in\NN$ tal que $\frac{1}{k+1}<|z|<\frac{1}{k}$. Definim $r:=\min\{\left|\frac{1}{k}-|z|\right|, \left|\frac{1}{k+1}-|z|\right|, \left|z-\left(y-\frac{1}{m}\right)\right|,\\ \left|y+\frac{1}{m}-z\right|\}$. Aleshores, $\forall n_0\in \mathbb N$ tal que $\frac{1}{n_0}<r$ tenim que $z\in U_{n_0}(z)\subset U_n(0)\cap U_m(y)$.
+                  \item Si $x,y\ne 0$, prenem $z\in U_n(x)\cap U_m(y)$ i definim $r:=\min\{\left|z-\left(x-\frac{1}{n}\right)\right|,\left|x+\frac{1}{n}-z\right|,\\\left|z-\left(y-\frac{1}{m}\right)\right|, \left|y+\frac{1}{m}-z\right|\}$. Aleshores, $\forall n_0\in \mathbb N$ tal que $\frac{1}{n_0}<r$ tenim que $z\in U_{n_0}(z)\subset U_n(x)\cap U_m(y)$.
+            \end{itemize}
+\end{itemize}
+
+Per tant, $\mathcal B$ és base d'una topologia. Ara, si prenem el conjunt $\bigcup_{x\in \mathbb R \setminus (-2,2)}U_1(x) \cup U_1(0)$ que és un obert a la topologia generada per $\mathcal B$ al ser una unió arbitrària d'elements de la base, llavors és clar que $Z$ és tancat, ja que el seu complementari és obert:
+$$\bigcup_{x\in \mathbb R \setminus (-2,2)}U_1(x) \cup U_1(0)=(\RR\setminus[-1,1])\cup ((-1,1)\setminus Z)=\RR\setminus Z$$ També és clar, per la definició de $Z$, que $0\notin Z$.
+
+Ara considerem un obert $U$ tal que $Z\subset U$. Com $Z$ no és obert, tenim que $U \neq Z$. Considerem també un obert $V$ tal que $0\in V$. Llavors, $\exists n\in \mathbb N$ tal que $U_n(0)\subset V$. Com $U$ és obert i $\frac{1}{n}\in Z \subset U \implies \exists x\in \mathbb R$ i $m\in \mathbb N$ tal que $\frac{1}{n}\in U_m(x)\subset U$. Llavors, sigui $0<\epsilon <r=\min\{\left|\frac{1}{n}-\left(x-\frac{1}{m}\right)\right|, \left|x+\frac{1}{m}-\frac{1}{n}\right|\} $ i $\epsilon \notin Z$. Fixem-nos, en efecte, que $r$ no pot ser 0, ja que això implicaria que $\frac{1}{n}$ està a un dels extrems de $U_m(x)$, que no pot ser perquè $U_m(x)$ és obert i $\frac{1}{n}\in U_m(x)$. Llavors, tenim que $\frac{1}{n}-\epsilon \in U_n(0)\subset V$. A més, és clar que $\frac{1}{n}-\epsilon\in U_m(x)$. Per tant, $U\cap V\supset U_m(x)\cap U_n(0) \neq \varnothing$.
+
+Per tant, amb això acabem de veure un exemple d'una topologia que és de Hausdorff, ja que si $x\ne y\in \RR$ (suposem sense pèrdua de generalitat que $x<y$), aleshores $\exists n,m\in\NN$ tals que $x+\frac{1}{n}<y-\frac{1}{m}$ i, per tant, $(x-\frac{1}{n},x+\frac{1}{n})\cap(y-\frac{1}{m},y+\frac{1}{m})=U_n(x)\cap U_m(x)=\varnothing$. És a dir, hem trobat oberts $U_n(x)$, $U_m(y)$ tals que $x\in U_n(x)$, $y\in U_m(y)$ i $U_n(x)\cap U_m(y)=\varnothing$. Però aquest espai topològic no és $T_3$, perquè si prenem el punt 0 i el tancat $Z$, tenim que $0\notin Z$ però hem vist que per a tot obert $V$ tal que $0\in V$, $Z\cap V\ne\varnothing$. Per tant per a tot obert $U$ tal que $Z\subset U$, tindrem que $U\cap V\ne\varnothing$.
+
+A continuació enunciarem una caracterització del espais $T_3$.
+\begin{theorem}
+      Sigui $(X,\tau)$ un espai topològic $T_1$. Són equivalents:
+      \begin{enumerate}
+            \item\label{t3_1} $(X,\tau)$ és $T_3$.
+            \item\label{t3_2} Per tot $x\in X$ i $x\in U \subset X$ obert, existeix un obert $V\subset X$ tal que $x \in V\subset \Cl(V) \subset U$.
+      \end{enumerate}
+\end{theorem}
+\begin{proof}
+      Vegem les dues implicacions.
+      \begin{itemize}[leftmargin=2cm]
+            \item [$\ref{t3_1}\implies \ref{t3_2}:$] Sigui $(X,\tau)$ és $T_3$. Volem demostrar que per tot $x\in X$ i per a tot $x\in U \subset X$ obert, existeix un obert $V\subset X$ tal que $x \in V\subset \Cl(V) \subset U$.
+
+                  Sigui $x\in X$ i $U\subset X$ obert tal que $x\in U$. Aleshores $X\setminus U$ és tancat i no conté $x$. Per tant, com que $(X,\tau)$ és $T_3$ existeixen oberts $V,W\in\tau$ tals que $x\in V$, $X\setminus U\subset W$ i $V\cap W=\varnothing$. Per tant, $V\subset X\setminus W$ i també $U\supset X\setminus W$ (ja que $X\setminus U\subset W$). Finalment: $$\Cl(V)\subset \Cl(X\setminus W)=X\setminus \Int(W)=X\setminus W\subset U$$
+                  Per tant, $x\in V\subset \Cl(V)\subset U$.
+                  % Com que $(X,\tau)$ és $T_3$ donat un $x \in X$ qualsevol i $F\subset X$ tancat tal que $x\notin F$, $\exists U, V\subset X$ oberts tal que $x\in U, \ F\subset V$ i $U\cap V=\varnothing$. Llavors $E=X\setminus F$ és obert i conté $x$. Per tant, com que $F \subset V$ tenim que $J=X\setminus V \subset E$ és un tancat. A més, com $U\cap V=\varnothing \implies U\subset J$. Però com la clausura de $U$ és el tancat més petit que conté $U$, llavors obtenim:
+                  % $$x \in U\subset \Cl(U)\subset J \subset E$$
+                  % Per tant, com tot obert $E$ es pot escriure com $X\setminus F$, amb $F$ un tancat que no conté $x$, i aquest argument serveix per tot $x\in X$, llavors es compleix la propietat \ref{t3_2}.
+            \item [$\ref{t3_1}\impliedby \ref{t3_2}:$] Volem demostrar que $(X,\tau)$ és $T_3$ sabent que per tot $x\in X$ i $x\in U \subset X$ obert, existeix un obert $V\subset X$ tal que $x \in V\subset \Cl(V) \subset U$.
+
+                  Sigui $x\in X$ i $F\subset X$ tancat tal que $x\notin F$. Aleshores $X\setminus F$ és obert i $x\in X\setminus F$. Però llavors, per hipòtesi, existeix un obert $V$ tal que $x\in V\subset \Cl(V)\subset X\setminus F$. Per tant, tenim que $x\in V$, $F\subset X\setminus \Cl(V)$ i $V\cap(X\setminus\Cl(V))=\varnothing$. I com que $X\setminus\Cl(V)$ és obert, tenim que $(X,\tau)$ és $T_3$.
+                  % Sigui $x\in X$ qualsevol i $x\in U \subset X$ un obert. Considerem que existeix un obert $V\subset X$ tal que $x\in V \subset \Cl(V)\subset U$. Llavors, prenem el tancat $J=X\setminus U$, el qual, per definició, no conté l'element $x$. També, per definició $J\cap \Cl(V)=\varnothing \implies J \cap V=\varnothing$. Per tant, si es considera l'obert $R=X\setminus \Cl(V)$, tenim que $J\subset R$ i, per tant, es compleix la condició de regularitat, que juntament amb la condició $T_1$ caracteritza els espais $T_3$. En efecte es compleix que donat el punt $x$ (que era qualsevol de $X$) i el tancat $J$ (que sempre el podem definir com a $X\setminus U$ amb $U\in\tau$) tal que $x\notin J$ ja definit, posant els oberts $V$ i $R$ es té la condició de regularitat doncs $R\cap V=\varnothing$.
+      \end{itemize}
+\end{proof}
+
+\subsubsection*{Espais $T_4$ o normals}
+
+Comencem donant la definició de què és un espai $T_4$.
+\begin{definition}
+      Diem que un espai topològic $(X,\tau)$ és $T_4$ si és $T_1$ i donats $F, K\subset X$ tancats disjunts, existeixen $U$, $V$ oberts tals que $K\subset U$, $F\subset V$ i $U\cap V=\varnothing$.
+\end{definition}
+
+Observem que els espais mètrics són $T_4$. En efecte, sigui $(X,d)$ un espai mètric i $K,F\subset X$ tancats tals que $K\cap F=\varnothing$. Definim $\ell:=d(K,F):=\inf\{d(k,f):k\in K,f\in F\}$. Ara considerem els oberts: $$U:=\bigcup_{k\in K}B(k,\ell/3)\quad V:=\bigcup_{f\in F}B(f,\ell/3)$$
+Per definició tenim que $K\subset U$ i $F\subset V$. A més, $U\cap V=\varnothing$ ja que si no, existiria un $z\in U\cap V$. Però llavors, $z\in B(k_0,\ell/3)$ i $z\in B(f_0,\ell/3)$ per certs $k_0\in K$ i $f_0\in F$. I per tant: $$d(k_0,f)\leq d(k_0,z)+d(z,f_0)<\frac{\ell}{3}+\frac{\ell}{3}<\ell$$
+que és una contradicció amb el fet que $\ell=d(K,F)$. Per tant, $U\cap V=\varnothing$ i, per tant, $(X,d)$ amb la topologia induïda és $T_4$.
+\begin{prop}
+      Tot espai topològic $T_4$ és $T_3$.
+\end{prop}
+\begin{proof}
+      Sigui $(X,\tau)$ un espai $T_4$. Al tenir $(X,\tau)$ la propietat $T_1$, sabem que $\forall x\in X$, $\{x\}$ és tancat. Llavors, si $F\subset X$ és un tancat tal que $F\cap\{x\}=\varnothing$, és a dir, $x\notin F$, per la propietat $T_4$, sabem que existeixen oberts $U$, $V$ tals que $\{x\}\subset U$, $F\subset V$ i que $U\cap V=\varnothing$. És a dir, hem vist que per a tot $x\in X$ i $F\subset X$ tancat tal que $x\notin F$, tenim que existeixen oberts $U$, $V$ tals que $x\in U$, $F\subset V$ i que $U\cap V=\varnothing$. Per tant, $(X,\tau)$ és $T_3$.
+\end{proof}
+A continuació enunciarem una caracterització del espais $T_4$.
+\begin{theorem}
+      Sigui $(X,\tau)$ un espai topològic $T_1$. Són equivalents:
+      \begin{enumerate}
+            \item\label{t4_1} $(X,\tau)$ és $T_4$
+            \item\label{t4_2} Per tot $K\subset X$ tancat i per a tot $U$ obert tal que $K\subset U \subset X$, existeix un obert $V$ tal que $K\subset V \subset \Cl(V) \subset U$.
+      \end{enumerate}
+\end{theorem}
+\begin{proof}
+      Vegem les dues implicacions.
+      \begin{itemize}[leftmargin=2cm]
+            \item [$\ref{t4_1}\implies \ref{t4_2}:$] Suposem que $(X,\tau)$ és $T_4$. Volem demostrar que per tot tancat $K\subset X$ i $K\subset U \subset X$ amb $U$ obert, existeix un obert $V$ tal que $K\subset V \subset \Cl(V) \subset U$.
+
+                  Sigui $K\subset X$ tancat i $U\subset X$ obert tal que $K\subset U$. Aleshores, $X\setminus U$ és tancat i $(X\setminus U)\cap K=\varnothing$. Per tant, com que $(X,\tau)$ és $T_4$ existeixen oberts $V,W\in\tau$ tals que $K\subset V$, $X\setminus U\subset W$ i $V\cap W=\varnothing$. Sabem que $K\subset V \subset \Cl(V)$ i ens falta veure que $\Cl(V) \subset U$. Per com que $V\cap W=\varnothing$, $V\subset X\setminus W$ i llavors: $$\Cl(V)\subset \Cl(X\setminus W)=X\setminus \Int(W)=X\setminus W\subset U$$
+                  Per tant, $K\subset V \subset \Cl(V) \subset U$.
+                  % Siguin $K\subset X$ i $F\subset X$ tancats disjunts. Llavors, sabem que existeixen oberts $U$, $V$ tal que $K\subset U,\ F\subset V$ i $U\cap V=\varnothing$. A més, escrivint $E=X\setminus F$, és clar que $K \subset E$ i $E$ és obert. També, com $F\subset V \implies J=X\setminus V \subset E$. El fet que $U\cap V=\varnothing$ ens assegura que $U\subset J=X\setminus V$. Com $J$ és tancat, llavors es té: $K\subset U \subset \Cl(U) \subset J \subset E$. Això es compleix per qualsevol tancat $K\subset X$.
+            \item [$\ref{t4_1}\impliedby \ref{t4_2}:$] Volem demostrar que $(X,\tau)$ és $T_4$ sabent que per tot $K\subset X$ tancat i per a tot $U$ obert tal que $K\subset U \subset X$, existeix un obert $V$ tal que $K\subset V \subset \Cl(V) \subset U$.
+
+                  Siguin $F,K\subset X$ tancats tals que $F\cap K=\varnothing$. Aleshores $X\setminus F$ és obert i $K\subset X\setminus F$. Però llavors, per hipòtesi, existeix un obert $V$ tal que $K\subset V\subset \Cl(V)\subset X\setminus F$. Per tant, tenim que $K\subset V$, $F\subset X\setminus \Cl(V)$ i $V\cap(X\setminus\Cl(V))=\varnothing$. I com que $X\setminus\Cl(V)$ és obert, tenim que $(X,\tau)$ és $T_4$.
+
+                  % Sigui $K\subset X$ un tancat qualsevol i $U$ un obert tal que $K\subset U\subset X$. Llavors, existeix $V$ obert tal que $K\subset V \subset \Cl(V) \subset U$. Per tant $F=X\setminus U$ és tancat. A més, $F$ i $K$ són tots dos tancats disjunts, doncs $K\subset U$. També es compleix que $F\subset R=X\setminus \Cl(V)$, amb $R$ un obert, i que $K\subset V$. Però és clar que $R\cap V=\varnothing$, doncs $V\subset \Cl(V)$. Per tant acabem de demostrar la propietat de normalització. En efecte, per qualsevol $K$ tancat, donat $F$ tancat disjunt, aquest es pot escriure com el conjunt total menys un obert.
+      \end{itemize}
+\end{proof}
+
+\end{document}

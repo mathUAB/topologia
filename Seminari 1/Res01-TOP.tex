@@ -1,0 +1,210 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm, amsmath, mathtools, amssymb}
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[catalan]{babel}
+\usepackage[affil-it]{authblk}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\titleformat{\section}
+  {\normalfont\fontsize{11}{15}\bfseries}{\thesection}{1em}{}
+
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\DeclareMathOperator{\Cl}{Cl} % closure set
+\DeclareMathOperator{\Int}{Int} % interior set
+\renewcommand{\theenumi}{\textbf{\thesection.\arabic{enumi}}}
+\renewcommand{\labelenumi}{\textbf{\thesection.\arabic{enumi}.}}
+
+\title{\bfseries\large SEMINARI 1. Dels entorns als filtres}
+
+\author{Víctor Ballester, NIU: 1570866\endgraf Arturo Castaño, NIU: 1566489}
+\date{\parbox{\linewidth}{\centering
+  Topologia\endgraf
+  Grau en Matemàtiques\endgraf
+  Universitat Autònoma de Barcelona\endgraf
+  Octubre de 2021}}
+
+\setlength{\parindent}{0pt}
+\begin{document}
+\selectlanguage{catalan}
+\maketitle
+\section{Convergència de successions, clausura i continuïtat}
+A partir de les definicions donades a l'enunciat, recordem que volem veure la noció de convergència d'una successió en un espai topològic i com aquesta noció no caracteritza els punts adherents a un subconjunt.
+
+Sigui $(X,\tau)$ un espai topològic.
+\begin{enumerate}
+      \item \textbf{Comproveu que si $\{x_n\}\subset A\subset X$ és una successió en $A\subset X$ que convergeix a $x\in X$, aleshores $x\in\Cl(A)$.}
+
+            Sigui $\{x_n\}\subset A \subset X$ tal que és convergent a $x \in X$. És a dir, per definició, $\forall E$ entorn, $\exists N_E \in \mathbb N$ tal que $x_n \in E\ \forall n >N_E$. Com $\{x_n\}\in A \ \forall n\implies E\cap A \neq \varnothing \implies x\in\Cl(A)$, per la definició de clausura.
+\end{enumerate}
+Però veurem que el recíproc no és cert. Per això, considerem $X$ un conjunt no numerable i fixem $x_0 \in X$. Sigui $\tau \subset \mathcal{P}(X)$ definit per: $A \in \tau$ si i només si ($x_0 \notin A$) o ($x_0 \in A$ i $X \setminus A$ és finit o numerable). Comprovem ara els següents fets:
+\begin{enumerate}\setcounter{enumi}{1}
+      \item \textbf{$\tau$ és una topologia en $X$.}
+
+            Per això cal verificar els tres axiomes que defineixen una topologia:
+            \begin{itemize}
+                  \item Clarament $X \in \tau$ doncs $X \setminus X$ és finit. També és clar que $\varnothing \in \tau$ doncs no conté $x_0$.
+                  \item Sigui $\{U_1,\ldots, U_n\}$ un conjunt d'elements de $\tau$. Tenim dos casos a considerar:
+                        \begin{itemize}
+                              \item Si existeix $i_0\in\{1,\ldots,n\}$ tal que $x_0\notin U_{i_0}$, aleshores $x_0 \notin \bigcap_{i=1}^n U_i$. Per tant, $\bigcap_{i=1}^n U_i\in\tau$.
+                              \item Si per a tot $i_0\in\{1,\ldots,n\}$ es compleix que $x_0\in U_{i_0}$, aleshores $x_0 \in \bigcap_{i=1}^n U_i$. Llavors tenim que: $$X \setminus \left(\bigcap_{i=1}^n U_i\right)=\bigcup_{i=1}^n (X\setminus U_i)$$ que serà un conjunt finit o numerable al ser una unió finita de conjunts finits o numerables. Per tant, $\bigcap_{i=1}^n U_i\in\tau$.
+                        \end{itemize}
+                  \item Sigui $\{U_i\}_{i\in I}$ una família arbitrària d'elements de $\tau$. De nou, tenim dos casos a considerar:
+                        \begin{itemize}
+                              \item Si per a tot $i_0\in\{1,\ldots,n\}$ tenim que $x_0\notin U_{i_0}$, aleshores $x_0 \notin \bigcup_{i\in I} U_i$. Per tant, $\bigcup_{i\in I} U_i\in\tau$.
+                              \item Si existeix $i_0\in\{1,\ldots,n\}$ tal que $x_0\in U_{i_0}$, aleshores $x_0 \in \bigcup_{i\in I} U_i$. Llavors tenim que: $$X \setminus \left(\bigcup_{i\in I} U_i\right)=\bigcap_{i\in I}(X\setminus U_i)$$ Com tots els conjunts són finits o numerables, llavors l'intersecció també ho serà. Per tant, $\bigcup_{i\in I} U_i\in\tau$.
+                        \end{itemize}
+            \end{itemize}
+      \item\label{1.3} \textbf{$\{x_n\}_{n\in\NN}\subset X$ convergeix a $x$ si i només si $\exists N>0$ amb $x_n=x$ $\forall n>N$.}
+
+            Vegem les dues implicacions:
+            \begin{itemize}[leftmargin=0.95cm]
+                  \item [$\impliedby:$] Directe per la definició de convergència.
+                  \item [$\implies:$] Sigui $\{x_n\}$ convergent a $X$. Hi ha dos casos a considerar:
+                        \begin{itemize}
+                              \item Si $x \neq x_0$, llavors si considerem el conjunt $\{x\}$, aquest pertany a $\tau$, i per tant és un obert, i doncs també un entorn de $x$. Llavors, aplicant la definició de convergència, ha d'existir un $N\in \mathbb N$ tal que $x_n=x$ $\forall n>N$.
+                                    \par
+                              \item Considerem ara $x=x_0$. Si la successió $\{x_n\}$ compleix que $x_n \neq x_0$ infinites vegades i $x_n=x_0$ un nombre finit de vegades, llavors podem considerar la successió parcial $\{x_{n_i}\}\subset \{x_n\}$ amb $x_{n_i} \neq x_0\ \forall n_i$. De forma similar, si $\{x_n\}$ és igual a $x_0$ infinites vegades i diferent de $x_0$ també infinites vegades, llavors podem considerar també la successió parcial dels elements diferents a $x_0$, que també serà convergent a $x_0$ al ser una parcial d'una successió convergent. Per tant, a partir d'ara podem considerar que la successió és sempre different de $x_0$. Llavors, com que el conjunt $\{x_n\}$ és numerable i no conté $x_0$, el conjunt $A=X \setminus \{x_n\}$ contindrà $x_0$ i, per tant, pertanyerà a $\tau$. És a dir, $A$ és un obert, i per tant també un entorn de $x_0$ que no contindrà cap element de $\{x_n\}$. Això contradiu el fet que la successió sigui convergent. Per tant, ha d'existir un $N \in \mathbb N$ tal que $x_n=x_0\ \forall n>N$.
+                        \end{itemize}
+            \end{itemize}
+      \item \textbf{$x_0\in\Cl(X\setminus\{x_0\})$ però $\{x_0\}$ no és límit de cap successió a $X\setminus\{x_0\}$.}
+
+            Notem que $\Cl(X\setminus \{x_0\})$= $X\setminus \Int(\{x_0\})$. Però $\{x_0\}$ no és obert, i per tant $\Int(\{x_0\})=\varnothing$. Per tant $\Cl(X\setminus \{x_0\}) = X \ni x_0$. Però, per l'apartat anterior, és clar que $x_0$ no és límit de cap successió a $X\setminus \{x_0\}$.
+      \item \textbf{Sigui $X_d$ el conjunt $X$ amb la topologia discreta, aleshores $X$ i $X_d$ tenen les mateixes successions convergents però l'aplicació identitat $X\rightarrow X_d$ no és contínua.}
+
+            Com que $X_d$ és la topologia més fina de totes, en particular, serà més fina que $X$. Llavors és clar que l'aplicació identitat no podrà ser continua de $X$ a $X_d$, doncs hi haurà oberts a $X_d$ que no ho seran a $X$ com, per exemple, el conjunt $\{x_0\}$.
+
+            Per veure que tenen les mateixes successions convergents, veurem que a $X_d$ la condició de convergència és la mateixa que a $X$: $$\{x_n\} \text{ convergent a }  x \iff \exists N\in \mathbb N \text{ tal que } x_n=x \text{ per a tot } n>N$$
+            Això és clar doncs $\forall x\in X$, $\{x\}$ és obert a $X_d$, i per tant, entorn de $x$. Llavors, de la mateixa forma que per l'apartat \ref{1.3} en els casos $x\neq x_0$, és clar que $X_d$ compleix la mateixa condició de convergència. Com a conseqüència, es té que ambdues topologies tenen les mateixes successions convergents.
+\end{enumerate}
+\section{Hi ha vida més enllà de les successions: els filtres}
+A continuació introduirem la noció de filtre.
+
+Sigui $(X,\tau)$ un espai topològic. Un filtre en $X$ és un conjunt $\mathcal{F}\subset\mathcal{P}(X)$ tal que:
+\begin{enumerate}\renewcommand{\labelenumi}{\arabic{enumi}.}
+      \item $\varnothing\notin\mathcal{F}$ i $\mathcal{F}\ne\varnothing$.
+      \item Si $A,B\in\mathcal{F}$, aleshores $A\cap B\in\mathcal{F}$.
+      \item Si $A\in\mathcal{F}$, $B\in\mathcal{P}(X)$ amb $A\subset B$, aleshores $B\in\mathcal{F}$.
+\end{enumerate}
+A partir d'aquesta definició és clar que les interseccions finites d'elements del filtre pertanyen al filtre, doncs es poden entendre com una concatenació d'interseccions entre dos elements (que pertanyen al filtre per la segona propietat) gràcies a la propietat associativa de la intersecció. En canvi de les interseccions infinites això no ho podem afirmar doncs podria ser que per tot element de $X$, hi hagi algun filtre a la intersecció que no el contingui.
+
+Siguin $X,Y$ dos conjunts.
+\begin{enumerate}
+      \item \textbf{Quin és el filtre menys fi que es pot construir sobre $X$? Té sentit parlar del filtre més fi de tots?}
+
+            De la definició és dedueix que tot filtre sempre ha de contenir el conjunt $X$, per la tercera propietat dels filtres. Ara bé,
+            és clar que $\mathcal{F}=\{X\}$ és un filtre. Llavors, aquest és el filtre menys fi que es pugui construir pel que acabem de comentar.
+
+            Però no es pot afirmar l'existència del ``filtre més fi de tots", doncs pot passar que hi hagi dos filtres de ``mida" (és a dir, nombre d'elements) similar, que no es continguin l'un a l'altre i que no hi hagi cap filtre més gran que els contingui als dos, doncs l'unió de filtres no té per què ser un filtre. Vegem un exemple per il·lustrar això. Agafem $X=\{a,b\}$ amb la topologia $\tau=\{\{a\}, \{a,b\}\}$. Llavors, $\mathcal{F}_1=\{\{a\}, \{a,b\}\}$ i $\mathcal{F}_2=\{\{b\}, \{a,b\}\}$ són filtres al complir els tres axiomes que compleixen els filtres. Però els únics subconjunts de $\mathcal{P}(X)$ que els contenen a tots dos són $\mathcal{P}(X)$ i $\mathcal{P}(X) \setminus \varnothing$, que no són filtres (el primer per contenir el buit, i el segon perquè contindria a $\{a\}$ i el seu complementari, i doncs també a la seva intersecció, que és el buit). Llavors, no hi ha cap filtre més fi a tots dos alhora.
+\end{enumerate}
+Definim ara la noció de base d'un filtre. Una base d'un filtre és un conjunt $\mathcal{B}\subset\mathcal{P}(X)$ que compleix:
+\begin{enumerate}\renewcommand{\labelenumi}{\arabic{enumi}.}
+      \item $\varnothing\notin\mathcal{B}$ i $\mathcal{B}\ne\varnothing$.
+      \item Si $A,B\in\mathcal{B}$, aleshores existeix $C\in\mathcal{B}$ tal que $C\subset A\cap B$.
+\end{enumerate}
+A més, a partir d'un conjunt $\mathcal{B}\subset \mathcal{P}(X)$ podem definir el conjunt $\mathcal{F}(\mathcal{B})$ de la següent manera: donat $A\subset X$, $A\in\mathcal{F}(\mathcal{B})$ si existeix $B\in\mathcal{B}$ amb $B\subset A$.
+\begin{enumerate}\setcounter{enumi}{1}
+      \item\label{filtre-base} \textbf{Comproveu que donat $\mathcal{B}\subset \mathcal{P}(X)$, aleshores $\mathcal{F}(\mathcal{B})$ és un filtre si i només si $\mathcal{B}$ és una base d'un filtre.}
+
+            Vegem les dues implicacions:
+            \begin{itemize}[leftmargin=0.95cm]
+                  \item [$\implies:$] Sabem que $\mathcal{F(B)}$ és filtre. Hem de veure que $\mathcal{B}$ compleix els dos axiomes de base:
+                        \begin{itemize}
+                              \item Clarament, per definició, $\mathcal{B \subset F(B)}$, $\varnothing \notin \mathcal{F(B)}$ i $\mathcal{F(B)}\neq\varnothing$. Per tant és clar que $\varnothing \notin \mathcal{B}$ i $\mathcal{B}\neq \varnothing$ (si $\mathcal{B}=\varnothing$, llavors per definició de $\mathcal{F(B)}$, $\mathcal{F(B)}$ també seria el buit).
+                              \item Siguin $A, B \in \mathcal{B \subset F(B)} \implies A \cap B\in \mathcal{F(B)}$. Però, per definició de $\mathcal{F(B)}, \ \exists C\in \mathcal{B}$ tal que $C \subset A \cap B$.
+                        \end{itemize}
+                        Per tant, $\mathcal{B}$ és una base d'un filtre.
+                  \item [$\impliedby:$] Sigui $\mathcal{B}$ base d'un filtre. Hem de veure que $\mathcal{F(B)}$ compleix els tres axiomes de filtre:
+                        \begin{itemize}
+                              \item Com que $\mathcal{B \subset F(B)}$ i $\mathcal{B}\ne \varnothing$, llavors $\mathcal{F(B)} \neq \varnothing$. Si $A=\varnothing$, com $\mathcal{B}$ és base, $\varnothing\notin\mathcal{B}$. Per tant, $\nexists B\in\mathcal{B}$ tal que $B\subset\varnothing=A$. Per tant, $A=\varnothing\notin\mathcal{F(B)}$.
+                              \item Siguin $A, C \in \mathcal{F(B)} \implies \exists B, B' \in \mathcal{B}$ tal que $B \subset A$, $B' \subset C$. Ara bé, per ser $\mathcal{B}$ base, $\exists D\in \mathcal{B}$ tal que $D \subset B \cap B' \subset A \cap C \implies A \cap C\in \mathcal{F(B)}$.
+                              \item Si $A \subset \mathcal{F(B)}$, aleshores $\exists B \in \mathcal{B}$ tal que $B \subset A$. Si $C \in \mathcal{P}(X)$ és tal que $A\subset C$, aleshores tenim que $B \subset C$ i, per tant, $C \in \mathcal{F(B)}$.
+                        \end{itemize}
+                        Per tant, $\mathcal{F(B)}$ és un filtre.
+            \end{itemize}
+            De fet, és clar que $\mathcal{F(B)}$ és el filtre menys fi que conté $\mathcal{B}$, doncs si $\mathcal{F'}$ és un filtre tal que $\mathcal{B \subset F'}$, aleshores per la tercera propietat dels filtres, tots els subconjunts de $\mathcal{P}(X)$ que continguin algun element de $\mathcal{B}$ hauran d'estar a $\mathcal{F'}$. Llavors, per definició de $\mathcal{F(B)}$, es tindrà que $\mathcal{F(B) \subset F'}$, essent llavors $\mathcal{F(B)}$ menys fi que $\mathcal{F'}$.
+\end{enumerate}
+Vegem ara un exemple. Agafem $X= \mathbb N$. Aleshores, $\mathcal{B}_N=\{S_n\}_{n\in \mathbb N}$ on $S_n=\{n, n+1, n+2, \ldots\}$ és un exemple de base d'un filtre. En efecte, clarament $\varnothing \notin \mathcal{B}_N$ i $\mathcal{B}_N\ne\varnothing$.  A més, si $S_n, S_m \in \mathcal{B}_N \implies S_n \cap S_m = S_{\max\{n, m\}} \in \mathcal{B}_N$.
+\begin{enumerate}\setcounter{enumi}{2}
+      \item \textbf{Quin filtre defineix a $\NN$?}
+
+            El filtre que defineix és:
+            $$\mathcal{F(B}_N)= \{A\subset \mathbb N:\text{$\NN\setminus A$ és finit}\} $$
+      \item \textbf{Proveu que per $A\subset \NN$, $A\in\mathcal{F}(\mathcal{B}_N)$ si i només si $\exists N>0$ tal que $n\in A$ $\forall n>N$.}
+            Vegem les dues implicacions:
+            \begin{itemize}[leftmargin=0.95cm]
+                  \item [$\implies:$] Si $A\in \mathcal{F(B}_N)$, definim $M:=\max\{\NN\setminus A\}$ que existeix ja que $\NN\setminus A$ és finit. Aleshores, és clar que tindrem $S_{M+1}\subset A$ i, per tant, $n\in A$ $\forall n\geq M+1$.
+                  \item [$\impliedby:$] Si $\exists M>0$ tal que $S_{M+1} \subset A$, tenim que $\NN\setminus S_{M+1} \supset\NN\setminus A$. Com que el terme de l'esquerra és finit, el terme de la dreta també ho serà i, per tant, $A\in\mathcal{F(B}_N)$.
+            \end{itemize}
+\end{enumerate}
+Sigui $f:X\rightarrow Y$ una funció i $\mathcal{F}\subset\mathcal{P}(X)$ un filtre.
+\begin{enumerate}\setcounter{enumi}{4}
+      \item \textbf{Comproveu que $f(\mathcal{F})=\{f(A):A\in\mathcal{F}\}$ no és necessàriament un filtre però sí que és una base d'un filtre.}
+
+            En efecte, considerem $X \subsetneq Y$. Aleshores, $f(X) \subsetneq Y$ doncs a cada element únicament li podem associar una imatge per $f$. Però anteriorment ja hem comentat que necessàriament hem de tenir $X \in \mathcal{F}$, per ser $\mathcal{F}$ un filtre en $X$. Ara bé, $Y \notin f(\mathcal{F})$. Per tant, $f(\mathcal{F})$ no serà un filtre en $Y$.
+
+            En canvi, comprovem ara que $f(\mathcal{F})$ sí que és base d'un filtre. Per això hem de veure que satisfà els dos axiomes de base:
+            \begin{itemize}
+                  \item Com que $\varnothing \neq f(X)$ (ja que s'entén que $X\ne\varnothing$), $f(\mathcal{F}) \neq \varnothing$. A més, $\forall A \subset X$ tal que $A \in \mathcal{F}$ tenim que $A\ne\varnothing$ i, per tant, $f(A) \neq \varnothing$ (cada element ha de tenir una imatge). Per tant, $\varnothing \notin f(\mathcal{F})$.
+                  \item Siguin $A, B \in \mathcal{F}$. Aleshores, $A \cap B \in \mathcal{F}$ i, per tant, $f(A\cap B) \in f(\mathcal{F})$. Ara bé, sigui $y \in f(A \cap B)$. Llavors $\exists x\in A \cap B$ tal que $f(x)=y$. Ara bé, $$x\in A \cap B\implies x\in A \text{ i } x\in B \implies f(x)\in f(A) \text{ i } f(x) \in f(B) \implies f(x)\in f(A)\cap f(B)$$ I per tant, $f(A\cap B) \subset f(A)\cap f(B)$.
+            \end{itemize}
+            Per tant, $f(\mathcal{F})$ és base d'un filtre.
+\end{enumerate}
+Denotem doncs per $f_*(\mathcal{F})$ el filtre generat per $f(\mathcal{F})$.
+\begin{enumerate}\setcounter{enumi}{5}
+      \item \textbf{Si $f:\NN\rightarrow X$ és una successió en $X$, escriviu explícitament el filtre $f_*(\mathcal{F}(\mathcal{B}_N))$.}
+
+            Sigui $\{x_n\}_{n\in\NN}$ la successió que defineix $f$. És a dir, $x_n=f(n)\ \forall n\in\NN$. Aleshores:
+            \begin{multline}\label{f*}
+                  f_*(\mathcal{F}(\mathcal{B}_N))=\{A\subset X \ : A=\{x_n\}_{n>M}\cup\{y_i\}_{i\in I}\text{ on $M\in\NN$, $I$ un conjunt d'índexs arbitrari}\\\text{i $y_i\in X\ \forall i\in I$}\}
+            \end{multline}
+\end{enumerate}
+\section{Modelem la convergència amb la noció de filtre}
+Sigui $(X,\tau)$ un espai topològic. Diem que $x \in X$ és un punt límit de $\mathcal{F} \text{ si } \mathcal{N}_x \subset \mathcal{F}$, on $\mathcal{N}_x$ denota el sistema d'entorns de $x$, és a dir, $\mathcal{N}_x=\{N\subset X:N\text{ és entorn de $x$}\}$. Escrivim $\lim (\mathcal{F})$ per denotar el conjunt de punts límits de $\mathcal{F}$. Comprovem ara els següents fets:
+\begin{enumerate}
+      \item\label{3.1} \textbf{Fixat $x_0\in X$, $x_0$ és un punt límit de $\mathcal{F}_{x_0}:=\{A\subset X:x_0\in A\}$. N'hi pot haver més de punts límits d'aquest filtre?}
+
+            Sigui $N$ un entorn de $x_0$, és a dir, tenim $x_0\in N$. Per tant, $N\in\mathcal{F}_{x_0}$. Com que això és cert per tot $N\in\mathcal{N}_{x_0}$, tenim que $\mathcal{N}_{x_0}\subset\mathcal{F}_{x_0}$ i, en conseqüència, $x_0\in\lim \mathcal{F}_{x_0}$.
+
+            Observem que sí que pot haver més punts límit d'aquest filtre. Per exemple, considerem el conjunt $X=\{a,b,c\}$ amb la topologia $\tau=\{\varnothing,\{b\},\{a,b\},\{a,b,c\}\}$. En aquest cas, el filtre $\mathcal{F}_b$ és $\mathcal{F}_b=\{\{b\},\{a,b\},\{b,c\},\{a,b,c\}\}$. Acabem de veure que $b\in\lim\mathcal{F}_b$. Però a més també tenim $a\in\lim\mathcal{F}_b$. En efecte, tenim que $\mathcal{N}_a=\{\{a,b\},\{a,b,c\}\}\subset \mathcal{F}_b$. Observem que $\{a\},\{a,c\}\notin \mathcal{N}_a$ perquè cap dels dos contenen algun element de $\tau$ que contingui $a$.
+      \item \textbf{Si $f:\NN\rightarrow X$ és una successió en $X$, quina propietat compleixen els punts límit de $f_*(\mathcal{F}(\mathcal{B}_N))$? Quina relació tenen amb els punts de convergència de la successió? Són els mateixos?}
+
+            Per la fórmula \eqref{f*}, tenim que, clarament si $x$ és un punt de convergència de $f(n)=:x_n$, llavors serà punt límit, doncs per la definició de convergència de $\{x_n\}$, per a tot entorn $E$ de $x$, existeix $N \in \mathbb N$ tal que $x_n\in E\ \forall n>N$. És a dir, $E \subset f_*(\mathcal{F(B_N}))$ i per tant, $N_x\subset f_*(\mathcal{F(B_N}))$.
+
+            D'altra banda, si $x$ és un punt límit de $f_*(\mathcal{F(B_N})) \implies \mathcal{N}_x \subset f_*(\mathcal{F(B_N})) \implies$ si $E$ és un entorn de $x$, llavors s'escriu de la forma $E=\{x_n\}_{n>M}\cup \{y_i\}_{i\in I} \ni x$, per algun $M\in \mathbb N$ i algun conjunt d'índexs $I$. Això últim implica que per a tot entorn $E$ de $x$, $\exists M\in \mathbb N$ tal que $x_n \in E$ si $n>M \ \implies x$ és un punt de convergència de $\{x_n\}$.
+
+            En conclusió, ser un punt límit de $f_*(\mathcal{F(B_N}))$ és equivalent a ser un punt convergent de $\{x_n\}_{n \in \mathbb N}$.
+
+      \item\label{limit} \textbf{Si $x\in\lim\mathcal{F}$, aleshores $x$ és un punt adherent a $A$ per a tot $A\in\mathcal{F}$.}
+
+            D'una banda tenim que $x\in\lim\mathcal{F}\implies \mathcal{N}_x\subset\mathcal{F}\implies\forall N\in \mathcal{N}_x,\ N\in\mathcal{F}$. Ara bé, sigui $A\in\mathcal{F}$. De la definició de filtre tenim que $A\cap N\in\mathcal{F}$ i com que $\varnothing\notin\mathcal{F}$, $A\cap N\ne\varnothing$. Per tant, $x$ és adherent a $A$. Com que el raonament és vàlid independentment de $A$, $x$ és adherent a $A$ per a tot $A\in\mathcal{F}$.
+      \item \textbf{Sigui $A\subset X$.  Aleshores $x\in\Cl(A)$ si i només si existeix un filtre $\mathcal{F}$ que conté $A$ i tal que $x\in\lim\mathcal{F}$.}
+
+            Vegem les dues implicacions:
+            \begin{itemize}[leftmargin=0.95cm]
+                  \item [$\implies:$] Si $x\in\Cl(A)$, aleshores hem de trobar un filtre $\mathcal{F}$ tal que $A\in\mathcal{F}$ i $x\in\lim\mathcal{F}$. Per això considerem el conjunt $\mathcal{B}=\{B\subset X:B=N\cap A,\ N\in\mathcal{N}_x\}$. Primer de tot comprovem que $\mathcal{B}$ és una base:
+                        \begin{itemize}
+                              \item Com que $\Cl(A)\in\mathcal{N}_x$, tenim que $A=\Cl(A)\cap A\in\mathcal{B}$. Per tant $\mathcal{B}\ne\varnothing$. A més, per definició d'entorn de $x$, $N\cap A\ne\varnothing$ per qualsevol $N\in\mathcal{N}_x$. Així doncs, $\varnothing\notin\mathcal{B}$.
+                              \item Si $B,C\in\mathcal{B}$, aleshores $B=N_B\cap A$ i $C=N_C\cap A$ per certs $N_B,N_C\in\mathcal{N}_x$. Ara bé, tenint en compte una de les propietats dels entorns, $N:=N_B\cap N_C\in\mathcal{N}_x$. Finalment: $$B\cap C=(N_B\cap A)\cap(N_C\cap A)=(N_B\cap N_C)\cap A=N\cap A\in\mathcal{B}$$
+                        \end{itemize}
+                        Per tant, $\mathcal{B}$ és una base. Ara considerem el filtre $\mathcal{F}(\mathcal{B})$, que efectivament és filtre per \ref{filtre-base}. A més, $A\in \mathcal{F}(\mathcal{B})$ ja que existeix $B=N\cap A\in\mathcal{B}$, per un cert $N\in\mathcal{N}_x$, tal que $B=N\cap A\subset A$\footnote{De fet aquesta propietat es compleix per a tot $B\in\mathcal{B}$.}. Finalment, cal veure que per a tot $N\in\mathcal{N}_x$ tenim $N\in\mathcal{F}$ ja que llavors tindrem que $\mathcal{N}_x\subset\mathcal{F}$ i, en conseqüència, $x\in\lim\mathcal{F}$. Però això és clar ja que existeix $B_N=N\cap A\in\mathcal{B}$ de manera que $B_N\subset N$. Per tant, $N\in\mathcal{F}(\mathcal{B})$, per la definició de $\mathcal{F}(\mathcal{B})$.
+                  \item [$\impliedby:$] Aquesta implicació és una conseqüència de \ref{limit}, ja que si $x\in\lim\mathcal{F}$, tenim que $x$ és un punt adherent a $A$ per a tot $A\in\mathcal{F}$. I per tant, $x\in\Cl(A)$ per a tot $A\in\mathcal{F}$. En particular, també és cert fixant un $A$ concret.
+            \end{itemize}
+      \item \textbf{Una aplicació $f:(X,\tau_X)\rightarrow (Y,\tau_Y)$ és contínua si i només si per tot filtre $\mathcal{F}$ i $x\in\lim\mathcal{F}$ es té que $f(x)\in\lim f_*(\mathcal{F})$.}
+
+            Vegem les dues implicacions:
+            \begin{itemize}[leftmargin=0.95cm]
+                  \item [$\implies:$] Sigui $\mathcal{F}$ un filtre tal que $x\in\lim\mathcal{F}$ i agafem $M\in\mathcal{N}_{f(x)}\subset P(Y)$. Volem veure que $\mathcal{N}_{f(x)}\subset f_*(\mathcal{F})$ ja que això implicarà $f(x)\in\lim f_*(\mathcal{F})$. Com que $f$ és contínua, existeix $N\in\mathcal{N}_x$ tal que $f(x)\in f(N)\subset M$. Ara bé, com que $f(N)\in f(\mathcal{F})$, tenim que $M\in f_*(\mathcal{F})$. A més, com que aquest raonament és vàlid independentment de $M$, tenim que $M\in f_*(\mathcal{F})$ per a tot $M\in\mathcal{N}_{f(x)}$, és a dir, $\mathcal{N}_{f(x)}\subset f_*(\mathcal{F})$.
+                  \item [$\impliedby:$] Per aquesta implicació, hem de veure que per a tot $x\in X$ i $U\in\tau_Y$ amb $f(x)\in U$, $\exists N\in \mathcal{N}_x$ tal que $f(N)\subset U$. Per veure-ho, observem primer que $\mathcal{N}_x$ és un filtre. En efecte:
+                        \begin{itemize}
+                              \item $\varnothing\notin\mathcal{N}_x$ ja que $x\notin\varnothing$. A més, $X\in\mathcal{N}_x$ i, per tant, $\mathcal{N}_x\ne\varnothing$.
+                              \item Si $N_1,N_2\in\mathcal{N}_x$, aleshores existeixen oberts $U,V\in\tau_X$ tals que $x\in U\subset N_1$ i $x\in V\subset N_2$. Així doncs, tenim que: $$x\in U\cap V\subset N_1\cap N_2$$ que pertany a $\mathcal{N}_x$ perquè $U\cap V$ és obert.
+                              \item Si $N\in\mathcal{N}_x$, existeix $U\in\tau_X$ tal que $x\in U\subset N$. Per tant, si $A\subset\mathcal{P}(X)$ és tal que $N\subset A$ aleshores tenim que $x\in U\subset N\subset A$, i per tant, $A$ és un entorn de $x$, és a dir, $A\in\mathcal{N}_x$.
+                        \end{itemize}
+                        Dit això, prenem ara el filtre $\mathcal{F}= \mathcal{N}_x$. Clarament $x\in\lim\mathcal{F}$, ja que $\mathcal{N}_x\subset\mathcal{F}=\mathcal{N}_x$. A més, per hipòtesi sabem que $f(x)\in\lim f_*(\mathcal{F})$. Així doncs, com que $U\in\mathcal{N}_{f(x)}\subset f_*(\mathcal{F})$ (perquè $f(x)\in\lim f_*(\mathcal{F})$), tenim que existeix $B=f(C)\in f(\mathcal{F})$, amb $C\in\mathcal{F}$, tal que $f(C)=B\subset U$. És a dir, $C\in\mathcal{F}=\mathcal{N}_x$ satisfà $f(x)\in f(C)\subset U$. Per tant, $f$ és contínua.
+            \end{itemize}
+\end{enumerate}
+
+\end{document}
